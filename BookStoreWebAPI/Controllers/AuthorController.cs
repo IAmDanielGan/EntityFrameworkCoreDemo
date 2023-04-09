@@ -40,5 +40,19 @@ namespace BookStoreWebAPI.Controllers
                 return context.Authors.Where(auth => auth.FirstName == newAuthor.FirstName).ToList();
             }
         }
+
+        [HttpDelete]
+        public void DeleteAuthorByID(int id)
+        {
+            using(var context= new BookStoresDbContext())
+            {
+                Author auth = context.Authors.Where(au => au.AuthorId == id).FirstOrDefault();
+                if(auth!=null)
+                {
+                    context.Authors.Remove(auth);
+                    context.SaveChanges();
+                }
+            }
+        }
     }
 }
