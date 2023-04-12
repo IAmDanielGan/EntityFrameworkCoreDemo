@@ -35,17 +35,27 @@ namespace BookStoreWebAPI.Controllers
         {
             //var publisher = await _context.Publishers.FindAsync(id);
             var publisher = _context.Publishers
-                .Include(pub=>pub.Books)
-                    .ThenInclude(book=>book.Sales)
-                .Include(pub=>pub.Users)
+                .Include(pub => pub.Books)
+                    .ThenInclude(book => book.Sales)
+                .Include(pub => pub.Users)
                 .Where(pub => pub.PubId == id)
                 .FirstOrDefault();
-            if (publisher==null)
+            if (publisher == null)
             {
                 return NotFound();
             }
             return publisher;
         }
+
+        [HttpGet()]
+        [Route("GetReturnTypeObject")]
+        public Publisher GetReturnTypeObject() => new Publisher()
+        {
+            PubId =1,
+            City="Vancouver",
+            Country="Canada"
+        };
+
         //[HttpPut]
         //public async Task<IActionResult> PutPublisher(int id, Publisher publisher)
         //{
