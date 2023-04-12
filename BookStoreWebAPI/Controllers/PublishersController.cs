@@ -51,9 +51,17 @@ namespace BookStoreWebAPI.Controllers
         [Route("GetReturnTypeObject")]
         public Publisher GetReturnTypeObject() => new Publisher()
         {
-            PubId =1,
-            City="Vancouver",
-            Country="Canada"
+            PubId = 1,
+            City = "Vancouver",
+            Country = "Canada"
+        };
+
+        [HttpGet()]
+        [Route("GetReturnTypeAsList")]
+        public IEnumerable<Publisher> GetReturnTypeAsList() => new List<Publisher>
+        {
+            new Publisher(){PubId=1, City="Vancouver"},
+            new Publisher(){PubId=2, City="Richmond" }
         };
 
         //[HttpPut]
