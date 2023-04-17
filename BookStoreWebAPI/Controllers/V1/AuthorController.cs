@@ -2,16 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookStoreWebAPI.Controllers
+namespace BookStoreWebAPI.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class AuthorController : ControllerBase
     {
         [HttpGet]
         public IEnumerable<Author> Get()
         {
-            using(var context=new BookStoresDbContext())
+            using (var context = new BookStoresDbContext())
             {
                 return context.Authors.ToList();
             }
@@ -21,16 +22,16 @@ namespace BookStoreWebAPI.Controllers
         [Route("{id}")]
         public IEnumerable<Author> GetAuthorByID(int id)
         {
-            using(var context=new BookStoresDbContext())
+            using (var context = new BookStoresDbContext())
             {
                 return context.Authors.Where(auth => auth.AuthorId == id).ToList();
             }
         }
 
         [HttpPost]
-        public IEnumerable<Author>  AddAuthor()
+        public IEnumerable<Author> AddAuthor()
         {
-            using(var context=new BookStoresDbContext())
+            using (var context = new BookStoresDbContext())
             {
                 Author newAuthor = new Author();
                 newAuthor.FirstName = "Daniel" + new Random().Next(1, 1000);
@@ -44,10 +45,10 @@ namespace BookStoreWebAPI.Controllers
         [HttpDelete]
         public void DeleteAuthorByID(int id)
         {
-            using(var context= new BookStoresDbContext())
+            using (var context = new BookStoresDbContext())
             {
                 Author? auth = context.Authors.Where(au => au.AuthorId == id).FirstOrDefault();
-                if(auth!=null)
+                if (auth != null)
                 {
                     context.Authors.Remove(auth);
                     context.SaveChanges();
